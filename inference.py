@@ -73,7 +73,8 @@ class Network:
         ### TODO: Start an asynchronous request ###
         ### TODO: Return any necessary information ###
         ### Note: You may need to update the function parameters. ###
-        self.exec_network.start_async(request_id = 0, inputs = {self.input_blob: image})
+        inputs = {'image_tensor' : frame,'image_info': (height, width, 1) }
+        self.exec_network.start_async(request_id = 0, inputs = inputs)
         return
 
     def wait(self):
@@ -87,4 +88,10 @@ class Network:
         ### TODO: Extract and return the output results
         ### Note: You may need to update the function parameters. ###
         return self.exec_network.requests[0].outputs[self.output_blob]
+    
+    def clear(self):
+        """To clear all running operations"""
+        del self.exec_network
+        del self.network
+        del self.load_network
 
