@@ -68,8 +68,22 @@ class Network:
         ### TODO: Return the shape of the input layer ###
         
         return self.network.inputs[self.input_blob].shape
+    
+    def get_output_name(self):
+        '''
+        Gets the input shape of the network
+        '''
+        output_name, _ = "", self.network.outputs[next(iter(self.network.outputs.keys()))]
+        for output_key in self.network.outputs:
+            if self.network.layers[output_key].type == "DetectionOutput":
+                output_name, _ = output_key, self.network.outputs[output_key]
 
-    def exec_net(self, image):
+        if output_name == "":
+            log.error("Can't find a DetectionOutput layer in the topology")
+            exit(-1)
+        return output_name
+
+    def exec_net(self, frame, height, width):
         ### TODO: Start an asynchronous request ###
         ### TODO: Return any necessary information ###
         ### Note: You may need to update the function parameters. ###
@@ -93,5 +107,5 @@ class Network:
         """To clear all running operations"""
         del self.exec_network
         del self.network
-        del self.load_network
+        del self.plugin
 
