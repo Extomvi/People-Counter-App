@@ -57,6 +57,18 @@ class Network:
         ### Note: You may need to update the function parameters. ###
         self.network = IENetwork(model=model_xml, weights=model_bin)
         self.exec_network = self.plugin.load_network(self.network, device)
+
+	# Check Network layer support
+        if "CPU" in device:
+            supported_layers = self.plugin.query_network(self.network, "CPU")
+            not_supported_layers = [l for l in self.network.layers.keys() if l not in supported_layers]
+            if len(not_supported_layers) != 0:
+                log.error("Following layers are not supported by the plugin for specified device {}:\n {}".
+                          format(device, ', '.join(not_supported_layers)))
+                log.error(
+                    "Please try to specify cpu extensions library path in sample's command line parameters using -l "
+                    "or --cpu_extension command line argument")
+                sys.exit(1)
         
         # Get the input layer
         self.input_blob = next(iter(self.network.inputs))
