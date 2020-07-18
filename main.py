@@ -150,7 +150,7 @@ def infer_on_stream(args, client):
         pro_frame = pro_frame.reshape(1, *pro_frame.shape)
 
         inf_start = time.time()
-        infer_network.async_inference(pro_frame)
+        infer_network.exec_net(pro_frame)
             
         if infer_network.wait() == 0:
             det_time = time.time() - inf_start
@@ -206,7 +206,6 @@ def main():
     client = connect_mqtt()
     # Perform inference on the input stream
     infer_on_stream(args, client)
-
 
 if __name__ == '__main__':
     main()
