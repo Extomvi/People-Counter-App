@@ -199,4 +199,8 @@ You can change each of these as follows:
 CAMERA_FEED_SERVER: "http://localhost:3004"
 ...
 MQTT_SERVER: "ws://localhost:3002"
+
+## Author
+
+TOMIWA ADEDOKUN
 ```
