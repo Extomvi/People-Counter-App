@@ -10,6 +10,7 @@ For Tensorflow, the second option is to replace the unsupported subgraph with a 
 Some of the potential reasons for handling custom layers are as follows:
 ● If a topology contains any layers that are not in the list of known layers.
 ● If a device doesn't support a particular layer.
+
 ### Procedure on the command line
 - wget 'link to the model'
 - tar -xvf faster_rcnn_inception_v2_coco_2018_01_28.tar.gz
@@ -44,6 +45,7 @@ The inference time of the model pre- and post-conversion was - 153.49 sec
 ## Assess Model Use Cases
 
 Some of the potential use cases of the people counter app are:
+
 ### Educational Institutions:
 * For attendance register in a lecture halls. It’ll be useful because it’ll be able to count the total number of people that came into the hall per lecture and cross-check with the total number of people that signed into the class for the lecture so as to detect those that didn’t attend a lecture and their signature was seen in the attendance register.
 
