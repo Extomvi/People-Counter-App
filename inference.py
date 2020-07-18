@@ -57,8 +57,8 @@ class Network:
         ### Note: You may need to update the function parameters. ###
         self.network = IENetwork(model=model_xml, weights=model_bin)
         self.exec_network = self.plugin.load_network(self.network, device)
-
-	# Check Network layer support
+        
+        # Check Network layer support
         if "CPU" in device:
             supported_layers = self.plugin.query_network(self.network, "CPU")
             not_supported_layers = [l for l in self.network.layers.keys() if l not in supported_layers]
@@ -95,13 +95,13 @@ class Network:
             exit(-1)
         return output_name
 
-    def exec_net(self, frame, height, width):
+    def exec_net(self, frame, request_id=0, faster_rnn=False):
         ### TODO: Start an asynchronous request ###
         ### TODO: Return any necessary information ###
         ### Note: You may need to update the function parameters. ###
-        inputs = {'image_tensor' : frame,'image_info': (height, width, 1) }
-        self.exec_network.start_async(request_id = 0, inputs = inputs)
-        return
+        inputs = {'image_tensor' : frame,'image_info': frame.shape[1:]}
+        self.exec_network.start_async(request_id = request_id, inputs = inputs)
+        returnv self.exec_network
 
     def wait(self):
         ### TODO: Wait for the request to be complete. ###
@@ -114,10 +114,4 @@ class Network:
         ### TODO: Extract and return the output results
         ### Note: You may need to update the function parameters. ###
         return self.exec_network.requests[0].outputs[self.output_blob]
-    
-    def clear(self):
-        """To clear all running operations"""
-        del self.exec_network
-        del self.network
-        del self.plugin
 
